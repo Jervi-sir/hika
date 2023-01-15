@@ -9,7 +9,7 @@
       Interested? 
       </span>
       <br>
-      <a class="get-in-touch" href="#">Get in touch</a>!
+      <a class="get-in-touch" @click="$router.push('/contact')">Get in touch</a>!
       
     </p>
     <hr class="min">
@@ -55,6 +55,7 @@ export default {
     margin-top: 1rem;
   }
   .get-in-touch {
+    cursor: pointer;
     text-decoration: underline;
     color: #FFFFFF;
     text-align: center;

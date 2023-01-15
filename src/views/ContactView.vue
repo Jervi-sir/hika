@@ -10,9 +10,9 @@
         <br>
         looking forward to hearing from you awesome people!
         <br>
-        discord id :- Hika#2704
+        discord id :- <u id="discord"  @click="copyMe(discord)">{{ discord }}</u>
         <br>
-        email :- hika@gmail.com
+        email :- <u id="email" @click="copyMe(email)">{{ email }}</u>
       </span>
     </p>
     <div class="credit">
@@ -20,13 +20,45 @@
     </div>
     <hr class="min">
     <hr class="full">
+    <transition>
+      <div v-if="showAnnotation" id="copied" v-bind:style="{ top: (mousePosX-100) + 'px', left: (mousePosY+100) + 'px'}">
+        <span>copied</span>
+      </div>
+    </transition>
   </div>
+  
 </template>
 
 <script>
 
+
 export default {
-  created () {
+  data () {
+    return {
+      discord: 'Hika#2704',
+      email: 'imhika1@gmail.com',
+      mousePosX: 0,
+      mousePosY: 0,
+      showAnnotation: false,
+    }
+  },
+  methods: {
+    copyMe (text) { 
+      var X = this.mousePosX;
+      var Y = this.mousePosY;
+      console.log(X, Y);
+      this.showAnnotation = true;
+      navigator.clipboard.writeText(text);
+      setTimeout(() => this.showAnnotation = false, 1000);
+
+    },
+  },
+
+  mounted() {
+    document.addEventListener("mousemove", (event) => {
+      this.mousePosX = event.clientX;
+      this.mousePosY = event.clientY;
+    });
   },
   name: 'ContactView',
   
@@ -34,6 +66,30 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+#copied {
+  position: absolute;
+  top:0;
+  left:0;
+  color: black;
+  background: white;
+  padding: 2px 6px;
+  border-radius: 1rem;
+  font-size: 12px;
+  text-align: center;
+}
+
+.scale {
+  transform: scale(1.1125);
+}
 .title {
   text-transform: uppercase;
   color: #FFFFFF;
@@ -57,6 +113,12 @@ span {
   &.p:nth-child(n + 2) {
     margin-top: 1rem;
   }
+}
+
+u:hover {
+  cursor: pointer;
+  color: #542CF2;
+  transition: 0.3s;
 }
 
 }
