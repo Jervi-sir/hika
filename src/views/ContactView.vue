@@ -10,9 +10,9 @@
         <br>
         looking forward to hearing from you awesome people!
         <br>
-        discord id :- <u id="discord"  @click="copyMe(discord)">{{ discord }}</u>
+        discord id :- <u id="discord"  @click="copyMe('discord', discord)">{{ discord }}</u>
         <br>
-        email :- <u id="email" @click="copyMe(email)">{{ email }}</u>
+        email :- <u id="email" @click="copyMe('email', email)">{{ email }}</u>
       </span>
     </p>
     <div class="credit">
@@ -22,6 +22,7 @@
     <hr class="full">
     <transition>
       <div v-if="showAnnotation" id="copied" v-bind:style="{ top: (mousePosX-100) + 'px', left: (mousePosY+100) + 'px'}">
+        <span>{{ type }} link</span>
         <span>copied</span>
       </div>
     </transition>
@@ -37,28 +38,28 @@ export default {
     return {
       discord: 'Hika#2704',
       email: 'imhika1@gmail.com',
-      mousePosX: 0,
-      mousePosY: 0,
+      type: '',
       showAnnotation: false,
     }
   },
   methods: {
-    copyMe (text) { 
-      var X = this.mousePosX;
-      var Y = this.mousePosY;
-      console.log(X, Y);
+    copyMe (type, text) { 
+      //var X = this.mousePosX;
+      //var Y = this.mousePosY;
+      //console.log(X, Y);
       this.showAnnotation = true;
       navigator.clipboard.writeText(text);
+      this.type = type;
       setTimeout(() => this.showAnnotation = false, 1000);
 
     },
   },
 
   mounted() {
-    document.addEventListener("mousemove", (event) => {
-      this.mousePosX = event.clientX;
-      this.mousePosY = event.clientY;
-    });
+    //document.addEventListener("mousemove", (event) => {
+      //this.mousePosX = event.clientX;
+      //this.mousePosY = event.clientY;
+    //});
   },
   name: 'ContactView',
   
@@ -77,14 +78,22 @@ export default {
 }
 #copied {
   position: absolute;
-  top:0;
-  left:0;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
   color: black;
   background: white;
   padding: 2px 6px;
   border-radius: 1rem;
   font-size: 12px;
   text-align: center;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 15px;
 }
 
 .scale {
